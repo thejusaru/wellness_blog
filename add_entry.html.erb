@@ -1,0 +1,46 @@
+<div style="background-color:#e6f7ff; min-height:80vh; padding:40px; border-radius:10px;">
+  <h1 style="text-align:center; color:#333;">Add Wellness Entry 💧</h1>
+  <p style="text-align:center; color:#555;">Log your activity, duration, and notes for today.</p>
+
+  <div style="max-width:400px; margin:40px auto; background:white; padding:25px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+    <label>Date:</label>
+    <input type="date" id="entry-date" style="width:100%; padding:8px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;">
+
+    <label>Activity:</label>
+    <input type="text" id="entry-activity" placeholder="e.g., Yoga, Running" style="width:100%; padding:8px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;">
+
+    <label>Time (minutes):</label>
+    <input type="number" id="entry-time" placeholder="e.g., 30" style="width:100%; padding:8px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;">
+
+    <label>Notes:</label>
+    <textarea id="entry-notes" placeholder="Write something about your session..." style="width:100%; padding:8px; margin-bottom:20px; border:1px solid #ccc; border-radius:6px;"></textarea>
+
+    <button id="save-entry" style="width:100%; background-color:#87ceeb; color:white; border:none; padding:10px; border-radius:8px; font-size:16px;">Save Entry</button>
+  </div>
+</div>
+
+<script>
+document.getElementById("save-entry").addEventListener("click", () => {
+  const date = document.getElementById("entry-date").value;
+  const activity = document.getElementById("entry-activity").value.trim();
+  const time = document.getElementById("entry-time").value;
+  const notes = document.getElementById("entry-notes").value.trim();
+
+  if (!activity || !date) {
+    alert("Please fill in at least the date and activity.");
+    return;
+  }
+
+  const newEntry = { date, activity, time, notes };
+  const entries = JSON.parse(localStorage.getItem("wellnessEntries")) || [];
+
+  entries.push(newEntry);
+  localStorage.setItem("wellnessEntries", JSON.stringify(entries));
+
+  alert("Wellness entry saved successfully!");
+  document.getElementById("entry-date").value = "";
+  document.getElementById("entry-activity").value = "";
+  document.getElementById("entry-time").value = "";
+  document.getElementById("entry-notes").value = "";
+});
+</script>
