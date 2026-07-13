@@ -1,0 +1,36 @@
+# MySQL. Versions 5.6.4 and up are supported.
+#
+# Install the MySQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem "mysql2"
+#
+# And be sure to use new-style password hashing:
+#   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: "thejni"
+  host: 127.0.0.1
+  port: 3306
+  ssl_mode: DISABLED
+  flags: 0
+
+development:
+  <<: *default
+  database: wellness_blog_development
+
+test:
+  <<: *default
+  database: wellness_blog_test
+
+production:
+  primary: &primary_production
+    <<: *default
+    database: wellness_blog_production
+    username: wellness_blog
+    password: <%= ENV["WELLNESS_BLOG_DATABASE_PASSWORD"] %>
